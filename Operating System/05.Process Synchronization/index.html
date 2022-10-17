@@ -1,0 +1,747 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
+    
+    
+      
+        <title>Process Synchronization in Operating System - Programming Fundamentals</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#process-synchronization-in-operating-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Programming Fundamentals" class="md-header__button md-logo" aria-label="Programming Fundamentals" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Programming Fundamentals
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Process Synchronization in Operating System
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Programming Fundamentals" class="md-nav__button md-logo" aria-label="Programming Fundamentals" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg>
+
+    </a>
+    Programming Fundamentals
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Computer Networking
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Computer Networking" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Computer Networking
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          Basics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Basics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Basics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Networking/01.Basics/01.Basics/" class="md-nav__link">
+        Terminology
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Networking/01.Basics/02.TransmissionMode/" class="md-nav__link">
+        Transmission Mode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Networking/01.Basics/03.Topology/" class="md-nav__link">
+        Topology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#some-terminologies" class="md-nav__link">
+    Some Terminologies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#producer-consumer-problem" class="md-nav__link">
+    Producer - Consumer Problem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements-of-synchronization-mechanisms" class="md-nav__link">
+    Requirements of Synchronization Mechanisms
+  </a>
+  
+    <nav class="md-nav" aria-label="Requirements of Synchronization Mechanisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lock-variable-mechanism-for-process-synchronization" class="md-nav__link">
+    Lock Variable Mechanism for Process Synchronization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#petersons-solution-to-process-synchronization" class="md-nav__link">
+    Peterson's Solution to Process Synchronization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="process-synchronization-in-operating-system">Process Synchronization in Operating System</h1>
+<ul>
+<li>
+<p>On the basis of synchronization, processes are categorized as one of the following two types:</p>
+</li>
+<li>
+<p>Independent Process: The execution of one process does not affect the execution of other processes.</p>
+</li>
+<li>
+<p>Cooperative Process: A process that can affect or be affected by other processes executing in the system.</p>
+</li>
+<li>
+<p>Process synchronization problem arises in the case of Cooperative process also because resources are shared in Cooperative processes.</p>
+</li>
+<li>
+<p>Processes can communicate with each other through both:</p>
+</li>
+<li>Shared Memory</li>
+<li>Message passing</li>
+</ul>
+<hr />
+<h3 id="some-terminologies">Some Terminologies</h3>
+<ol>
+<li>
+<p>Race Condition</p>
+</li>
+<li>
+<p>A Race Condition typically occurs when two or more threads try to read, write and possibly make the decisions based on the memory that they are accessing concurrently.</p>
+</li>
+<li>It usually happens due to multiple threads accessing a shared resource or executing a common code block.</li>
+<li>Race conditions can leave the system vulnerable to security attacks where attackers can tamper with the shared data.</li>
+<li>
+<p>Race conditions can be avoided by proper synchronization between threads. In Java usage of synchronized and volatile keywords helps us achieve the same</p>
+</li>
+<li>
+<p>Critical Section</p>
+</li>
+<li>
+<p>The regions of a program that try to access shared resources and may cause race conditions are called critical section.</p>
+</li>
+<li>
+<p>To avoid race condition among the processes, we need to assure that only one process at a time can execute within the critical section.</p>
+</li>
+<li>
+<p>Semaphore</p>
+</li>
+<li>
+<p>Semaphore is simply an integer variable that is shared between threads.</p>
+</li>
+<li>This variable is used to solve the critical section problem and to achieve process synchronization in the multiprocessing environment.</li>
+<li>
+<p>Semaphores are of two types:</p>
+<ul>
+<li>Binary Semaphore –</li>
+<li>This is also known as mutex lock. It can have only two values – 0 and 1. Its value is initialized to 1. It is used to implement the solution of critical section problems with multiple processes.</li>
+<li>Counting Semaphore –</li>
+<li>Its value can range over an unrestricted domain. It is used to control access to a resource that has multiple instances.</li>
+</ul>
+</li>
+<li>
+<p>Mutex</p>
+</li>
+<li>
+<p>Mutex is a mutual exclusion object that synchronizes access to a resource.</p>
+</li>
+<li>It is created with a unique name at the start of a program.</li>
+<li>The Mutex is a locking mechanism that makes sure only one thread can acquire the Mutex at a time and enter the critical section.</li>
+<li>
+<p>This thread only releases the Mutex when it exits the critical section.</p>
+</li>
+<li>
+<p>Mutex VS Semaphore</p>
+</li>
+<li>A Mutex is different than a semaphore as it is a locking mechanism while a semaphore is a signalling mechanism.</li>
+<li>A binary semaphore can be used as a Mutex but a Mutex can never be used as a semaphore.</li>
+</ol>
+<hr />
+<h2 id="producer-consumer-problem">Producer - Consumer Problem</h2>
+<ul>
+<li>
+<p>The Producer-Consumer problem is a classic synchronization problem in operating systems.</p>
+</li>
+<li>
+<p>The problem is defined as follows:</p>
+</li>
+<li>
+<p>There is a fixed-size buffer and a Producer process, and a Consumer process.</p>
+</li>
+<li>The Producer process creates an item and adds it to the shared buffer.</li>
+<li>
+<p>The Consumer process takes items out of the shared buffer and “consumes” them.</p>
+</li>
+<li>
+<p>Certain conditions must be met by the Producer and the Consumer processes to have consistent data synchronization:</p>
+</li>
+<li>
+<p>The Producer process must not produce an item if the shared buffer is full.</p>
+</li>
+<li>The Consumer process must not consume an item if the shared buffer is empty.</li>
+<li>
+<p>Access to the shared buffer must be mutually exclusive; this means that at any given instance, only one process should be able to access the shared buffer and make changes to it.</p>
+</li>
+<li>
+<p>The solution to the Producer-Consumer problem involves three semaphore variables.</p>
+</li>
+<li>
+<p>semaphore Full</p>
+<ul>
+<li>Tracks the space filled by the Producer process.</li>
+<li>It is initialized with a value of 0 as the buffer will have 0 filled spaces at the beginning.</li>
+</ul>
+</li>
+<li>semaphore Empty<ul>
+<li>Tracks the empty space in the buffer. It is initially set to buffer_size as the whole buffer is empty at the beginning.</li>
+</ul>
+</li>
+<li>
+<p>semaphore mutex</p>
+<ul>
+<li>Used for mutual exclusion so that only one process can access the shared buffer at a time.</li>
+</ul>
+</li>
+<li>
+<p>Using the signal() and wait() operations on these semaphores, we can arrive at a solution.</p>
+</li>
+<li>
+<p>Producer Solution:</p>
+</li>
+</ul>
+<p><code>void Producer(){
+      while(true){
+          // Produce an item
+          wait(Empty);
+          wait(mutex);
+          add();
+          signal(mutex);
+          signal(Full);
+      }
+  }</code></p>
+<ul>
+<li>
+<p>In the code above, the Producer process waits for the Empty semaphore. This means that the Producer process is kept in busy-waiting if the Empty semaphore value is 0 ,indicating that there are 0 empty spaces available. The Producer will have to wait for the Consumer to consume some items from the buffer and make some space available for itself.</p>
+</li>
+<li>
+<p>The Producer then waits for the mutex semaphore, which merely ensures that once a thread has entered the critical section of the code, the rest of the threads cannot access it and cause race conditions.</p>
+</li>
+<li>
+<p>The add() function appends the item to the shared buffer. Once a Producer process reaches this point in the code, it is guaranteed that no other process is accessing the shared buffer concurrently, preventing data inconsistency.</p>
+</li>
+<li>
+<p>After the Producer process adds the item to the shared buffer, it uses the signal() operation to increase the value of the mutex semaphore by one, thereby allowing any other threads which were busy-waiting in the mutex semaphore to access the critical section.</p>
+</li>
+<li>
+<p>Lastly, the Producer process uses the signal() operation on the Full semaphore, increasing its value by 1, indicating that an item has been added to the shared buffer and the count for the filled spaces has increased by one.</p>
+</li>
+<li>
+<p>Consumer Solution:</p>
+</li>
+</ul>
+<p><code>void Consumer(){
+      while(true){
+          wait(Full);
+          wait(mutex);
+          consume();
+          signal(mutex);
+          signal(Empty)
+      }
+  }</code></p>
+<ul>
+<li>
+<p>The Consumer waits for the Full semaphore. If the Full semaphore value is 0, it indicates that there are no items to consume, and it must wait for the Producer process to produce an item and add it to the shared buffer for consumption.</p>
+</li>
+<li>
+<p>As previously mentioned, the mutex semaphore ensures mutually exclusive access to the critical section of the code so that the shared buffer is only accessed by one thread at a time for data synchronization.</p>
+</li>
+<li>
+<p>Once the Consumer process reaches the critical section of the code, i.e., the consume() function, it executes the function and takes one item from the shared buffer.</p>
+</li>
+<li>
+<p>After taking an item from the buffer, the Consumer process first uses signal(mutex) to release the mutex semaphore, allowing other threads that may have been busy-waiting in the mutex to access the critical section.</p>
+</li>
+<li>
+<p>Lastly, the Consumer uses signal(Empty) to increase the value of the Empty semaphore by one, indicating that a free slot has been made in the shared buffer. Any Producer processes that may have been waiting in the Empty semaphore are now allowed to add an item to the shared buffer.</p>
+</li>
+</ul>
+<hr />
+<h2 id="requirements-of-synchronization-mechanisms">Requirements of Synchronization Mechanisms</h2>
+<ul>
+<li>
+<p>In order to synchronize the cooperative processes, our main task is to solve the critical section problem. We need to provide a solution in such a way that the following conditions can be satisfied.</p>
+</li>
+<li>
+<p>Primary</p>
+</li>
+<li>
+<p>Mutual Exclusion</p>
+<ul>
+<li>Our solution must provide mutual exclusion. By Mutual Exclusion, we mean that if one process is executing inside critical section then the other process must not enter in the critical section.</li>
+</ul>
+</li>
+<li>
+<p>Progress</p>
+<ul>
+<li>Progress means that if one process doesn't need to execute into critical section then it should not stop other processes to get into the critical section.</li>
+</ul>
+</li>
+<li>
+<p>Secondary</p>
+</li>
+<li>
+<p>Bounded Waiting</p>
+<ul>
+<li>We should be able to predict the waiting time for every process to get into the critical section. The process must not be endlessly waiting for getting into the critical section.</li>
+</ul>
+</li>
+<li>
+<p>Portability</p>
+<ul>
+<li>Our mechanism must be architectural natural. It means that if our solution is working fine on one architecture then it should also run on the other ones as well.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="lock-variable-mechanism-for-process-synchronization">Lock Variable Mechanism for Process Synchronization</h3>
+<ul>
+<li>This is the simplest synchronization mechanism. This is a Software Mechanism implemented in User mode.</li>
+<li>This is a busy waiting solution which can be used for more than two processes.</li>
+<li>In this mechanism, a Lock variable lockis used. Two values of lock can be possible, either 0 or 1.</li>
+<li>Lock value 0 means that the critical section is vacant while the lock value 1 means that it is occupied.</li>
+<li>A process which wants to get into the critical section first checks the value of the lock variable.</li>
+<li>
+<p>If it is 0 then it sets the value of lock as 1 and enters into the critical section, otherwise it waits.</p>
+</li>
+<li>
+<p>Every Synchronization mechanism is judged on the basis of four conditions.</p>
+</li>
+<li>
+<p>Mutual Exclusion</p>
+</li>
+<li>Progress</li>
+<li>Bounded Waiting</li>
+<li>
+<p>Portability</p>
+</li>
+<li>
+<p>The lock variable mechanism doesn't provide Mutual Exclusion in some of the cases.</p>
+</li>
+<li>
+<p>Let us consider that we have two processes P1 and P2. The process P1 wants to execute its critical section. P1 gets into the entry section. Since the value of lock is 0 hence P1 changes its value from 0 to 1 and enters into the critical section.</p>
+</li>
+<li>
+<p>Meanwhile, P1 is preempted by the CPU and P2 gets scheduled. Now there is no other process in the critical section and the value of lock variable is 0. P2 also wants to execute its critical section. It enters into the critical section by setting the lock variable to 1.</p>
+</li>
+<li>
+<p>Now, CPU changes P1's state from waiting to running. P1 is yet to finish its critical section. P1 has already checked the value of lock variable and remembers that its value was 0 when it previously checked it. Hence, it also enters into the critical section without checking the updated value of lock variable.</p>
+</li>
+<li>
+<p>Now, we got two processes in the critical section. According to the condition of mutual exclusion, morethan one process in the critical section must not be present at the same time. Hence, the lock variable mechanism doesn't guarantee the mutual exclusion.</p>
+</li>
+<li>
+<p>The problem with the lock variable mechanism is that, at the same time, more than one process can see the vacant tag and more than one process can enter in the critical section. Hence, the lock variable doesn't provide the mutual exclusion that's why it cannot be used in general.</p>
+</li>
+</ul>
+<hr />
+<h3 id="petersons-solution-to-process-synchronization">Peterson's Solution to Process Synchronization</h3>
+<ul>
+<li>Peterson’s Solution is a classical software-based solution to the critical section problem.</li>
+<li>
+<p>It is a busy waiting solution can be implemented for only two processes.</p>
+</li>
+<li>
+<p>In Peterson’s solution, we have two shared variables:</p>
+</li>
+<li>
+<p>A boolean Flag[]: A boolean array Flag which is initialized to FALSE. This Flag array represents which process wants to enter into the critical section.</p>
+</li>
+<li>
+<p>int Turn: A integer variable Turn indicates the process number which is ready to enter into the critical section.</p>
+</li>
+<li>
+<p>Peterson’s Solution preserves all three conditions:</p>
+</li>
+<li>
+<p>Mutual Exclusion is assured as only one process can access the critical section at any time.</p>
+</li>
+<li>Progress is also assured, as a process outside the critical section does not block other processes from entering the critical section.</li>
+<li>
+<p>Bounded Waiting is preserved as every process gets a fair chance.</p>
+</li>
+<li>
+<p>Disadvantages of Peterson's solution are:</p>
+</li>
+<li>The Peterson's solution involves Busy waiting</li>
+<li>The solution is also limited to only 2 processes.</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.078830c0.min.js"></script>
+      
+    
+  </body>
+</html>
