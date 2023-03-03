@@ -203,6 +203,59 @@ nav:
       - Ansible: coming-soon.md
       - Terraform: coming-soon.md
   - Python:
-      - Introduction: index1.md
+      - Basics:
+          - About Python: Python/about-python.md
+      - Variables:
+          - Memory Management: Python/memory-management.md
+          - Namespace & Scope: Python/namespace-scope.md
+          - Typecasting: Python/type-casting.md
+
+      - Functions:
+          - Function: Python/functions.md
+
+      - Data Type:
+          - Numbers: Python/numbers.md
+          - String: Python/string.md
+          - List: Python/list.md
+          - Tuple: Python/tuple.md
+          - Dictionary: Python/dictionary.md
+          - Sets: Python/sets.md
+
+      - Operators:
+          - Operators: Python/operators.md
+
+      - Control Flow:
+          - Decision Making: Python/decision-making.md
+          - Loops: Python/loops.md
+
+      - OOPS:
+          - OOPS: coming-soon.md
+
+      - Exception Handling:
+          - Exception Handling: coming-soon.md
+
+      - Collections:
+          - Collections: coming-soon.md
+
+      - Multithreading:
+          - Multithreading: coming-soon.md
+
+      - Multiprocessing:
+          - Multiprocessing: coming-soon.md
+
+      - AsyncIO:
+          - AsyncIO: coming-soon.md
+
+      - Type Hints:
+          - Type Hints: coming-soon.md
+
+      - Unit Testing:
+          - Unit Testing: coming-soon.md
+
+      - Logging:
+          - Logging: coming-soon.md
+
+      - Clean Architecture:
+          - Clean Architecture: coming-soon.md
   - JavaScript:
       - Introduction: coming-soon.md
