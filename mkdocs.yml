@@ -16,9 +16,193 @@ theme:
         name: Switch to light mode
 
 nav:
-    - Home: index.md
-    - Computer Networking:
+  - Computer Networking:
       - Basics:
-        - Terminology: Computer Networking/01.Basics/01.Basics.md
-        - Transmission Mode: Computer Networking/01.Basics/02.TransmissionMode.md
-        - Topology: Computer Networking/01.Basics/03.Topology.md
+          - Terminology: Computer Networking/01.Basics/01.Basics.md
+          - Transmission Mode: Computer Networking/01.Basics/02.TransmissionMode.md
+          - Topology: Computer Networking/01.Basics/03.Topology.md
+      - Physical Layer:
+          - Terminology: Computer Networking/02.Physical Layer/01.Terminology.md
+          - Encoding: Computer Networking/02.Physical Layer/02.Encoding.md
+          - Transmission Media: Computer Networking/02.Physical Layer/03.Transmission Media.md
+          - Transmission Impairement: Computer Networking/02.Physical Layer/04.Transmission Impairement.md
+          - Multiplexing: Computer Networking/02.Physical Layer/05.Multiplexing.md
+          - Switching: Computer Networking/02.Physical Layer/06.Switching.md
+      - Datalink Layer:
+          - Introduction: Computer Networking/03.Datalink Layer/01.Introduction.md
+          - Ethernet Frame: Computer Networking/03.Datalink Layer/02.Ethernet Frame.md
+          - MAC Address: Computer Networking/03.Datalink Layer/03.MAC Address.md
+      - Network Layer:
+          - IP Address: Computer Networking/04.Network Layer/01.IP Address.md
+          - ARP: Computer Networking/04.Network Layer/02.Address Resolution Protocol.md
+          - Subnetting: Computer Networking/04.Network Layer/03.Subnetting.md
+          - Routing: Computer Networking/04.Network Layer/04.Routing.md
+          - Network Layer Protocols: Computer Networking/04.Network Layer/05.Network Layer Protocol.md
+      - Transport Layer:
+          - Introduction: Computer Networking/05.Transport Layer/01.Introduction.md
+          - TCP / UDP: Computer Networking/05.Transport Layer/02.TCP and UDP.md
+      - Session Layer:
+          - Introduction: Computer Networking/06.Session Layer/01.Introduction.md
+      - Presentation Layer:
+          - Introduction: Computer Networking/07.Presentation Layer/01.Introduction.md
+      - Application Layer:
+          - Introduction: Computer Networking/08.Application Layer/01.Introduction.md
+          - Application Layer Protocol: Computer Networking/08.Application Layer/02.Application Layer Protocols.md
+          - DNS: Computer Networking/08.Application Layer/03.DNS.md
+          - HTTP: Computer Networking/08.Application Layer/04.HTTP.md
+      - Other Concepts:
+          - DNS: Computer Networking/09.Other Concepts/01.DNS.md
+          - DHCP: Computer Networking/09.Other Concepts/02.DHCP.md
+          - Routers / Gateways: Computer Networking/09.Other Concepts/03.Routers and Gateways.md
+          - URL / URI: Computer Networking/09.Other Concepts/04.URL vs URI.md
+          - SSH / SSL: Computer Networking/09.Other Concepts/05.SSH and SSL.md
+          - HTTP: Computer Networking/09.Other Concepts/06.HTTP.md
+          - URI: Computer Networking/09.Other Concepts/URI.md
+          - Important Questions: Computer Networking/09.Other Concepts/Important Questions.md
+  - DBMS:
+      - Postgres:
+          - Commands: Database Management System/Postgres/00.Commands.md
+          - User / Roles: Database Management System/Postgres/01.User and Roles.md
+          - Database: Database Management System/Postgres/02.Database.md
+          - Schemas: Database Management System/Postgres/03.Schemas.md
+          - Data Types: Database Management System/Postgres/04.Data Types.md
+          - Tables: Database Management System/Postgres/05.Tables.md
+          - Querying Data: Database Management System/Postgres/06.Querying Data.md
+          - Filtering Data: Database Management System/Postgres/07.Filtering Data.md
+          - Joins: Database Management System/Postgres/08.Joins.md
+          - Grouping Data: Database Management System/Postgres/09.Grouping Data.md
+          - Set Operations: Database Management System/Postgres/10.Set Operations.md
+          - Sub Querying: Database Management System/Postgres/11.Sub Query.md
+          - Modifying Data: Database Management System/Postgres/12.Modifying Data.md
+          - Transactions: Database Management System/Postgres/13.Transactions.md
+          - Constraints: Database Management System/Postgres/14.Constraints.md
+          - PgSQL: Database Management System/Postgres/15.pgSQL.md
+          - Views: Database Management System/Postgres/16.Views.md
+          - Trigger: Database Management System/Postgres/17.Trigger.md
+          - Indexes: Database Management System/Postgres/18.Indexes.md
+      - Theory:
+          - Introduction: Database Management System/Theory/01.Introduction.md
+          - Architecture: Database Management System/Theory/02.Architecture.md
+          - Data Model: Database Management System/Theory/03.Data Model.md
+          - DBMS Language: Database Management System/Theory/04.DBMS Language.md
+          - ACID Property: Database Management System/Theory/05.ACID Properties.md
+          - ER Model: Database Management System/Theory/06.ER Model.md
+          - Key: Database Management System/Theory/07.Key.md
+          - Some Terminology: Database Management System/Theory/08.Some Terminology.md
+          - Relational Algebra: Database Management System/Theory/09.Relational Algebra.md
+          - Functional Dependency: Database Management System/Theory/10.Functional Dependency.md
+          - Normalization: Database Management System/Theory/11.Normalization.md
+          - Transaction: Database Management System/Theory/12.Transaction.md
+          - Schedule: Database Management System/Theory/13.Schedule.md
+          - Failure: Database Management System/Theory/14.Failure.md
+          - Recovery: Database Management System/Theory/15.Recovery.md
+          - Checkpoint: Database Management System/Theory/16.Checkpoint.md
+          - Deadlock: Database Management System/Theory/17.Deadlock.md
+          - Concurrency: Database Management System/Theory/18.Concurrency.md
+          - Indexing: Database Management System/Theory/19.Indexing.md
+  - Operating System:
+      - Introduction: Operating System/01.Introduction.md
+      - Kernel: Operating System/02.Kernel.md
+      - System Call: Operating System/03.System Call.md
+      - Process Management: Operating System/04.Process Management.md
+      - Process Synchronization: Operating System/05.Process Synchronization.md
+      - Deadlock: Operating System/06. Deadlock.md
+      - Process / Threads: Operating System/07.Process and Threads.md
+      - Memory Management: Operating System/08.Memory Management.md
+  - AWS:
+      - Cloud Computing:
+          - Introduction: AWS/cloud-computing-basics.md
+          - AWS CAF: AWS/aws-caf.md
+          - Cloud Architecture: AWS/cloud-architecture.md
+          - AWS WAF: AWS/waf.md
+          - AWS Trusted Advisor: AWS/aws-ta.md
+          - Best Practices: AWS/best-practices.md
+
+      - Global Infrastructure:
+          - Region: AWS/region.md
+          - Availability Zone: AWS/availability-zone.md
+          - Data Center: AWS/data-center.md
+          - Local Zone: AWS/local-zones.md
+          - Points of Presence: AWS/pop.md
+
+      - Cloud Economics & Billing:
+          - Pricing Model: AWS/pricing-model.md
+          - AWS Organization: AWS/organizations.md
+          - AWS Billing: AWS/billing.md
+          - Technical Support: AWS/support.md
+
+      - Cloud Security:
+          - IAM: AWS/iam.md
+          - AWS CloudTrail: AWS/cloud-trail.md
+          - Access Control: AWS/access-control.md
+          - AWS KMS: AWS/aws-kms.md
+          - AWS Cognito: AWS/cognito.md
+          - AWS Shield: AWS/shield.md
+          - Data Encryption: AWS/encryption.md
+          - AWS Config: AWS/config.md
+          - AWS Artifact: AWS/artifact.md
+
+      - Network Environment:
+          - Networking Basics: AWS/networking-basics.md
+          - Amazon VPC: AWS/vpc.md
+          - VPC Networking: AWS/vpc-networking.md
+          - VPC Security: AWS/vpc-security.md
+          - Route 53: AWS/route-53.md
+          - CloudFront: AWS/cloudfront.md
+
+      - Compute:
+          - EC2 Introduction: AWS/compute-services.md
+          - EC2 Pricing Model: AWS/ec2-pricing.md
+          - EC2 Cost Optimization: AWS/ec2-cost-optimization.md
+          - Container Services: AWS/container-services.md
+          - Amazon ECS: AWS/ecs.md
+          - Amazon EKS: AWS/eks.md
+          - Amazon ECR: AWS/ecr.md
+          - AWS Lambda: AWS/lambda.md
+          - AWS Elastic Beanstalk: AWS/beanstalk.md
+          - Placement Group: AWS/placement-group.md
+
+      - Storage:
+          - AWS EBS: AWS/ebs.md
+          - AWS S3: AWS/s3.md
+          - AWS EFS: AWS/efs.md
+
+      - Database:
+          - Amazon RDS: AWS/rds.md
+          - Amazon DynamoDB: AWS/dynamodb.md
+
+      - Scaling and Monitoring:
+          - Scaling Compute Capacity: AWS/ec2-auto-scaling.md
+          - Scaling Database Resource: AWS/scaling-db.md
+          - Highly Available Environment: AWS/load-balancing.md
+          - Monitoring: AWS/cloudwatch.md
+
+      - Caching Content:
+          - Edge Caching: AWS/edge-caching.md
+          - Elastic Cache: AWS/elastic-cache.md
+
+      - Application Architecture:
+          - Decoupled Architecture: AWS/decoupled-architecture.md
+          - Serverless Architecture: AWS/serverless.md
+  - DevOps:
+      - Linux: coming-soon.md
+      - Git: coming-soon.md
+      - Nginx:
+          - Introduction: DevOps/Nginx/01.NginxIntroduction.md
+          - Installation: DevOps/Nginx/02.InstallationOnUbuntu.md
+          - Configuration: DevOps/Nginx/03.NginxConfiguration.md
+          - Local Matches: DevOps/Nginx/04.LocationMatches.md
+          - Variables: DevOps/Nginx/05.Variables.md
+          - Redirection: DevOps/Nginx/06.Redirections.md
+          - Logging: DevOps/Nginx/07.Logging.md
+          - Reverse Proxy: DevOps/Nginx/08.ReverseProxy.md
+      - YAML: coming-soon.md
+      - Github Actions: coming-soon.md
+      - Docker: coming-soon.md
+      - Kubernetes: coming-soon.md
+      - Ansible: coming-soon.md
+      - Terraform: coming-soon.md
+  - Python:
+      - Introduction: index1.md
+  - JavaScript:
+      - Introduction: coming-soon.md
