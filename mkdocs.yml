@@ -220,6 +220,7 @@ nav:
           - Tuple: Python/tuple.md
           - Dictionary: Python/dictionary.md
           - Sets: Python/sets.md
+          - Difference: Python/Difference.md
 
       - Operators:
           - Operators: Python/operators.md
@@ -229,33 +230,26 @@ nav:
           - Loops: Python/loops.md
 
       - OOPS:
-          - OOPS: coming-soon.md
+          - OOPS: Python/OOPS.md
 
       - Exception Handling:
-          - Exception Handling: coming-soon.md
-
-      - Collections:
-          - Collections: coming-soon.md
+          - Exception Handling: Python/Exception-Handling.md
 
       - Multithreading:
-          - Multithreading: coming-soon.md
+          - Multithreading: Python/Multithreading.md
 
       - Multiprocessing:
-          - Multiprocessing: coming-soon.md
+          - Multiprocessing: Python/Multiprocessing.md
 
       - AsyncIO:
-          - AsyncIO: coming-soon.md
+          - AsyncIO: Python/AsyncIO.md
 
       - Type Hints:
-          - Type Hints: coming-soon.md
+          - Type Hints: Python/Type_hints.md
+      - Decorator:
+          - Decorator: Python/Decorator.md
+      - Generator:
+          - Generator: Python/Generator.md
 
-      - Unit Testing:
-          - Unit Testing: coming-soon.md
-
-      - Logging:
-          - Logging: coming-soon.md
-
-      - Clean Architecture:
-          - Clean Architecture: coming-soon.md
   - JavaScript:
       - Introduction: coming-soon.md

@@ -73,3 +73,18 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: fun() missing 1 required positional argument: 'b'
 ```
+
+## Lambda Function
+
+A lambda function is typically used as a small, anonymous function.
+
+```python
+square = lambda x: x**2
+square(2)
+```
+
+```python
+numbers = [1, 2, 3, 4, 5]
+squares = map(lambda x: x**2, numbers)
+print(list(squares))  # Output: [1, 4, 9, 16, 25]
+```
