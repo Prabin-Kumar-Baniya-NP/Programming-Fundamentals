@@ -252,4 +252,24 @@ nav:
           - Generator: Python/Generator.md
 
   - JavaScript:
-      - Introduction: coming-soon.md
+      - Data Type, Operators: JavaScript/Variables-Operators.md
+      - Conditionals: JavaScript/Conditional.md
+      - Function: JavaScript/Function.md
+      - Arrays: JavaScript/Arrays.md
+      - Objects: JavaScript/Objects.md
+      - Loops: JavaScript/Loops.md
+      - this: JavaScript/this.md
+      - Bind & Call: JavaScript/Bind-Call.md
+      - Destructuring Data: JavaScript/Destructuring.md
+      - Spread & Rest Operator: JavaScript/Spread & Rest operator.md
+      - Hoisting: JavaScript/Hoisting.md
+      - Lexical Environment: JavaScript/Lexical-Environment.md
+      - Block Scoping: JavaScript/Block-Scoping.md
+      - Variable Shadowing: JavaScript/VariableShadowing.md
+      - Closure: JavaScript/Closure.md
+      - setTimeout: JavaScript/setTimeOut.md
+      - Promises: JavaScript/Promises.md
+      - FetchAPI: JavaScript/FetchAPI.md
+      - Async Await: JavaScript/AsyncAwait.md
+      - Curring: JavaScript/Currying.md
+      - Event Loop: JavaScript/EventLoop.md
