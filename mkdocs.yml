@@ -273,3 +273,7 @@ nav:
       - Async Await: JavaScript/AsyncAwait.md
       - Curring: JavaScript/Currying.md
       - Event Loop: JavaScript/EventLoop.md
+  - React:
+      - Component LifeCycle: React/Component LifeCycle.md
+      - Virual DOM: React/VirtualDOM.md
+      - Hooks: React/Hooks.md
