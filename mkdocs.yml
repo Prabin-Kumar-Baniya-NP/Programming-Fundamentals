@@ -185,8 +185,6 @@ nav:
           - Decoupled Architecture: AWS/decoupled-architecture.md
           - Serverless Architecture: AWS/serverless.md
   - DevOps:
-      - Linux: coming-soon.md
-      - Git: coming-soon.md
       - Nginx:
           - Introduction: DevOps/Nginx/01.NginxIntroduction.md
           - Installation: DevOps/Nginx/02.InstallationOnUbuntu.md
