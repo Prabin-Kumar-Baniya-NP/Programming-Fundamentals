@@ -204,6 +204,8 @@ nav:
       - Kubernetes: coming-soon.md
       - Ansible: coming-soon.md
       - Terraform: coming-soon.md
+      - Deployment:
+          - Django EC2 Deploy: DevOps/Deployment/django-linux-deploy.md
   - Python:
       - Basics:
           - About Python: Python/about-python.md
