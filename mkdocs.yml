@@ -101,25 +101,25 @@ nav:
           - Concurrency: Database Management System/Theory/18.Concurrency.md
           - Indexing: Database Management System/Theory/19.Indexing.md
       - Mongodb:
-          - Introduction: docs/Database Management System/MongoDB/01.Introduction.md
-          - Database: docs/Database Management System/MongoDB/02.Database.md
-          - Collections: docs/Database Management System/MongoDB/03.Collections.md
-          - Inserting Documents: docs/Database Management System/MongoDB/04.InsertingDocuments.md
-          - Read Operation: docs/Database Management System/MongoDB/05.ReadOperation.md
-          - Importing Data: docs/Database Management System/MongoDB/06.ImportingData.md
-          - Comparison Operator: docs/Database Management System/MongoDB/07.ComparisonOperator.md
-          - Cursors: docs/Database Management System/MongoDB/08.Cursors.md
-          - Logical Operators: docs/Database Management System/MongoDB/09.LogicalOperators.md
-          - Complex Expressions: docs/Database Management System/MongoDB/10.ComplexExpressions.md
-          - Elements Operator: docs/Database Management System/MongoDB/11.ElementsOperator.md
-          - Projections: docs/Database Management System/MongoDB/12.Projections.md
-          - Embedded Documents: docs/Database Management System/MongoDB/13.EmbeddedDocuments.md
-          - Update Operations: docs/Database Management System/MongoDB/14.UpdateOperations.md
-          - Add/Remove/Rename Fields: docs/Database Management System/MongoDB/15.AddingRemovingRenamingFields.md
-          - Updating Embedded Documents: docs/Database Management System/MongoDB/16.UpdateEmbeddedDocuments.md
-          - Delete Operation: docs/Database Management System/MongoDB/17.DeleteOperation.md
-          - Indexes: docs/Database Management System/MongoDB/18.Indexes.md
-          - Aggregation: docs/Database Management System/MongoDB/19.Aggregation.md
+          - Introduction: Database Management System/MongoDB/01.Introduction.md
+          - Database: Database Management System/MongoDB/02.Database.md
+          - Collections: Database Management System/MongoDB/03.Collections.md
+          - Inserting Documents: Database Management System/MongoDB/04.InsertingDocuments.md
+          - Read Operation: Database Management System/MongoDB/05.ReadOperation.md
+          - Importing Data: Database Management System/MongoDB/06.ImportingData.md
+          - Comparison Operator: Database Management System/MongoDB/07.ComparisonOperator.md
+          - Cursors: Database Management System/MongoDB/08.Cursors.md
+          - Logical Operators: Database Management System/MongoDB/09.LogicalOperators.md
+          - Complex Expressions: Database Management System/MongoDB/10.ComplexExpressions.md
+          - Elements Operator: Database Management System/MongoDB/11.ElementsOperator.md
+          - Projections: Database Management System/MongoDB/12.Projections.md
+          - Embedded Documents: Database Management System/MongoDB/13.EmbeddedDocuments.md
+          - Update Operations: Database Management System/MongoDB/14.UpdateOperations.md
+          - Add/Remove/Rename Fields: Database Management System/MongoDB/15.AddingRemovingRenamingFields.md
+          - Updating Embedded Documents: Database Management System/MongoDB/16.UpdateEmbeddedDocuments.md
+          - Delete Operation: Database Management System/MongoDB/17.DeleteOperation.md
+          - Indexes: Database Management System/MongoDB/18.Indexes.md
+          - Aggregation: Database Management System/MongoDB/19.Aggregation.md
   - Operating System:
       - Introduction: Operating System/01.Introduction.md
       - Kernel: Operating System/02.Kernel.md
