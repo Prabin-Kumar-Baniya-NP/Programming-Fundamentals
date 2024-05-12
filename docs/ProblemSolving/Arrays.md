@@ -12,18 +12,15 @@ Input: arr[] = {10, 4, 3, 50, 23, 90}
 Output: 90
 ```
 
-```js
-const arr = [10, 4, 3, 50, 23, 90];
+```py
+l = [1,6,3,4,5]
+largest = 0
 
-let largest = -1;
+for num in l:
+    if num > largest:
+        largest = num
 
-arr.forEach((item) => {
-  if (item > largest) {
-    largest = item;
-  }
-});
-
-console.log(largest);
+print(largest)
 ```
 
 ### Find the largest three distinct elements.
@@ -36,26 +33,23 @@ Input: arr[] = {10, 4, 3, 50, 23, 90}
 Output: 90, 50, 23
 ```
 
-```js
-const arr = [10, 4, 3, 50, 23, 90];
-var length = arr.length;
+```py
+l = [1,5,2,4,3,6]
 
-var first = (second = third = -1);
+first = second = third = -1
 
-arr.forEach((num) => {
-  if (num > first) {
-    third = second;
-    second = first;
-    first = num;
-  } else if (num > second) {
-    third = second;
-    second = num;
-  } else {
-    third = num;
-  }
-});
+for num in l:
+    if num > first:
+        third = second
+        second = first
+        first = num
+    elif num > second:
+        third = second
+        second = num
+    elif num > third:
+        third = num
 
-console.log(first, second, third);
+print(first, second, third)
 ```
 
 ### Find the second largest element in an array.
@@ -96,14 +90,12 @@ Input: arr[] = {10, 4, 3, 50, 23, 90}, k=3
 Output: 10
 ```
 
-```js
-let arr = [10, 4, 3, 50, 23, 90];
+```py
+l = [1,5,2,4,3,6]
 
-let k = 3;
-
-arr.sort((a, b) => a - b); // a-b for ascending, b-a for descending
-
-console.log(arr[k - 1]);
+l = sorted(l)
+k = 2
+print(l[len(l) - k])
 ```
 
 ### Find the element that appears n/k times.
@@ -120,22 +112,93 @@ Output: {9}
 Explanation: Here n/k is 7/3 = 2, therefore 9 appears 3 times in the array that is greater than 2.
 ```
 
-```js
-let arr = [3, 1, 2, 2, 1, 2, 3, 3];
+```py
+numbers = [3, 1, 2, 2, 1, 2, 3, 3]
 
-const n = arr.length;
+occurence = len(numbers) / 4 # 8/4 => 2 => Ans 2,3
 
-const freq = [];
+frequency = {}
 
-const i = n / 4;
+for num in numbers:
+    if num not in frequency.keys():
+        frequency[num] = 1
+    else:
+        frequency[num] = frequency[num] + 1
 
-for (let k = 0; k < n; k++) {
-  freq[k] = 0;
-}
+for key, value in frequency.items():
+    if value > occurence:
+        print(key)
+```
 
-arr.forEach((item, index) => {
-  freq[item] += 1;
-});
+### Move all zeros to the end of array
 
-console.log(arr[freq.indexOf(i + 1)]);
+```
+You are given an array of integers, your task is to move all the zeros in the array to the end of the array and move non-negative integers to the front by maintaining their order.
+
+Example 1:
+Input: 1 ,0 ,2 ,3 ,0 ,4 ,0 ,1
+Output: 1 ,2 ,3 ,4 ,1 ,0 ,0 ,0
+Explanation: All the zeros are moved to the end and non-negative integers are moved to front by maintaining order
+
+Example 2:
+Input: 1,2,0,1,0,4,0
+Output: 1,2,1,4,0,0,0
+Explanation: All the zeros are moved to the end and non-negative integers are moved to front by maintaining order
+```
+
+```py
+numbers = [1,2,0,0,3,4,5,6,0,9,0]
+
+temp = []
+
+for num in numbers:
+    if num != 0:
+        temp.append(num)
+
+for i in range(len(numbers)):
+    if i < len(temp):
+        numbers[i] = temp[i]
+    else:
+        numbers[i] = 0
+
+print(numbers)
+```
+
+### Rearrange the sorted array in Max-Min form using two pointer approach
+```
+Given a sorted array of positive integers, rearrange the array alternately i.e first element should be a maximum value, at second position minimum value, at third position second max, at fourth position second min, and so on. 
+
+Examples: 
+
+Input: arr[] = {1, 2, 3, 4, 5, 6, 7} 
+Output: arr[] = {7, 1, 6, 2, 5, 3, 4}
+
+Input: arr[] = {1, 2, 3, 4, 5, 6} 
+Output: arr[] = {6, 1, 5, 2, 4, 3} 
+```
+
+```py
+numbers = [1,2,3,4,5,6,7]
+sorted = []
+
+i = 0
+j = len(numbers) -1
+
+while(i<=j):
+    if i == j:
+        sorted.append(numbers[i])
+    elif numbers[i] > numbers[j]:
+        sorted.append(numbers[i])
+        sorted.append(numbers[j])
+    else:
+        sorted.append(numbers[j])
+        sorted.append(numbers[i])
+    i += 1
+    j -= 1
+
+print(sorted)
+```
+```
+Time Complexity: O(n)
+Space Complexity: O(n)
 ```
