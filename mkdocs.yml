@@ -226,6 +226,11 @@ nav:
       - Terraform: coming-soon.md
       - Deployment:
           - Django EC2 Deploy: DevOps/Deployment/django-linux-deploy.md
+      - Kubernetes:
+          - Introduction: DevOps/Kubernetes/01.Introduction.md
+          - Kubectl: DevOps/Kubernetes/02.Kubectl.md
+          - Deployments: DevOps/Kubernetes/03.Deployments.md
+          - Yaml: DevOps/Kubernetes/04.Yaml.md
   - Python:
       - Basics:
           - About Python: Python/about-python.md
