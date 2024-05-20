@@ -225,3 +225,58 @@ user ubuntu;
 
 [Check whether nginx can serve the static files]
 
+Also restart nginx
+```
+sudo systemctl restart nginx
+```
+
+## Media files via Nginx
+
+- To serve media files by nginx, open /etc/nginx/sites-available/django and add
+
+```
+location /media/ {
+        alias /home/ubuntu/Vaccination-Scheduling-App/mysite/media/;
+}
+```
+Also restart nginx
+```
+sudo systemctl restart nginx
+```
+
+## Configure Email Backend
+
+Add this in settings.py file
+
+```py
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = ""
+EMAIL_PORT = "" 
+EMAIL_HOST_USER = ""  
+EMAIL_HOST_PASSWORD = "" 
+```
+in the email.py file, add the from value
+```py
+email = EmailMessage(subject, message, to=[to_email], from_email=EMAIL_HOST_USER)
+```
+
+## Securing the website via HTTPS [Incompleted]
+
+Install certbot
+```
+sudo apt install certbot python3-certbot-nginx
+```
+
+Open /etc/nginx/sites-available/django and then add server name
+```
+server_name prabinkumarbaniya.tech www.prabinkumarbaniya.tech;
+```
+
+```
+A Record - For IPv4
+AAA Record - For IPv6
+CNAME - it point to another host. Example: www.prabinkumarbaniya.tech can have cname record prabinkumarbaniya.tech
+
+```
