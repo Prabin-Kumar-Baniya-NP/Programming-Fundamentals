@@ -91,11 +91,18 @@ Output: 10
 ```
 
 ```py
-l = [1,5,2,4,3,6]
-
-l = sorted(l)
-k = 2
-print(l[len(l) - k])
+numbers:list = [1, 23, 12, 9, 30, 2, 50]
+k = 3
+max_numbers = []
+for i in range(len(numbers)):
+    if i < k:
+        max_numbers.append(numbers[i])
+    else:
+        min_number = min(max_numbers)
+        if numbers[i] > min_number:
+            index = max_numbers.index(min_number)
+            max_numbers[index] = numbers[i]
+print(max_numbers)
 ```
 
 ### Find the element that appears n/k times.
@@ -147,21 +154,20 @@ Explanation: All the zeros are moved to the end and non-negative integers are mo
 ```
 
 ```py
-numbers = [1,2,0,0,3,4,5,6,0,9,0]
+numbers: list = [1 ,0 ,2 ,3 ,0 ,4 ,0 ,1]
 
-temp = []
+result:list = []
+number_of_zero_to_add:int = 0
 
-for num in numbers:
-    if num != 0:
-        temp.append(num)
+for item in numbers:
+    if item == 0:
+        number_of_zero_to_add += 1
+    elif item > 0:
+        result.append(item)
 
-for i in range(len(numbers)):
-    if i < len(temp):
-        numbers[i] = temp[i]
-    else:
-        numbers[i] = 0
+result.extend([0 for i in range(number_of_zero_to_add)])
 
-print(numbers)
+print(result)
 ```
 
 ### Rearrange the sorted array in Max-Min form using two pointer approach
@@ -178,29 +184,17 @@ Output: arr[] = {6, 1, 5, 2, 4, 3}
 ```
 
 ```py
-numbers = [1,2,3,4,5,6,7]
-sorted = []
+numbers: list = [1, 2, 3, 4, 5, 6, 7]
+length: int = len(numbers)
+result = []
 
-i = 0
-j = len(numbers) -1
+for i in range(0,int(length/2)):
+    result.append(numbers[length-i-1])
+    result.append(numbers[i])
 
-while(i<=j):
-    if i == j:
-        sorted.append(numbers[i])
-    elif numbers[i] > numbers[j]:
-        sorted.append(numbers[i])
-        sorted.append(numbers[j])
-    else:
-        sorted.append(numbers[j])
-        sorted.append(numbers[i])
-    i += 1
-    j -= 1
+result.append(numbers[i+1])
 
-print(sorted)
-```
-```
-Time Complexity: O(n)
-Space Complexity: O(n)
+print(result)
 ```
 
 ## Array Rearrangement
@@ -217,20 +211,22 @@ The order of all other elements should be same.
 Expected time complexity is O(n) and extra space is O(1).
 ```
 
-```js
-let arr = [1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0];
-let n = arr.length;
+```py
+# Fill the positive numbers by maintaining a variable and then fill the 0
 
-let count = 0; // count of non-zero elements
-for(let i=0; i<n; i++){
-    if (arr[i] != 0){
-        arr[count++] = arr[i];
-    }
-}
-while(count < n){
-    arr[count] = 0;
-    count++;
-}
+numbers: list = [1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0]
+num_len = len(numbers)
 
-console.log(arr);
+positive_num_count = 0
+
+# Move all positive numbers to the front by ignoring the 0
+for i in range(0, num_len):
+    if numbers[i] > 0:
+        numbers[positive_num_count] = numbers[i]
+        positive_num_count += 1
+
+# Fill the remaining zeros
+while(positive_num_count != num_len):
+    numbers[positive_num_count] = 0
+    positive_num_count += 1
 ```
