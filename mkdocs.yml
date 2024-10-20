@@ -298,9 +298,13 @@ nav:
       - Curring: JavaScript/Currying.md
       - Event Loop: JavaScript/EventLoop.md
   - React:
+      - Introduction: React/01.Introduction.md
       - Component LifeCycle: React/Component LifeCycle.md
       - Virual DOM: React/VirtualDOM.md
       - Hooks: React/Hooks.md
+      - HOC: React/HOC.md
+      - LazyLoading: React/LazyLoading.md
+      - Redux: React/Redux.md
   - Problem Solving:
       - Sorting Algorithms: ProblemSolving/Sorting.md
       - Arrays: ProblemSolving/Arrays.md
