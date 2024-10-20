@@ -109,3 +109,20 @@ function isEven(item) {
 arr_even = arr.filter(isEven);
 console.log(arr_even);
 ```
+
+### Pure and Impure Functions
+
+```js
+// Pure function
+function add(x, y) {
+  return x + y;
+}
+
+// Impure function
+let counter = 0;
+function incrementCounter() {
+  counter++;
+  return counter;
+}
+
+```

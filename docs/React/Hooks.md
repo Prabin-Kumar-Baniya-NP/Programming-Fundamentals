@@ -1,5 +1,10 @@
 # Hooks
 
+- In react, reconciliation is the process of updating the DOM whenver the component state changes. Using this algorithm, react compares the changes made to the virtual dom with the previous virtual dom and determines what changes are required to update the DOM. In other words, When a component’s state or props change, React creates a new virtual DOM tree. It then compares this new tree with the previous one to identify what has changed. This process is known as "diffing."
+
+- In React 16, we have a React Fiber which is the re-implementation of reconciliation algorithm. It was introduced to increase efficiency in updating the DOM. It has some key features like asynchronous rendering, prioritization, concurrency.
+
+
 ## useState
 
 ```js
@@ -36,6 +41,10 @@ export default UseStateWithObject;
 ```
 
 ## useEffect
+
+- No depenedency array - useEffect is called on every render of the component.
+- Empty dependency array - useEffect is called on initial render of component only for 1 time
+- If any dependency - useEffect is called when its value is changed
 
 ```js
 import React, { useState, useEffect } from "react";

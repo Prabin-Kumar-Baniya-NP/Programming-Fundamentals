@@ -1,4 +1,21 @@
-# Class Components
+# Component
+
+- Class Based Component (Old)
+- Functional Component (New)
+
+```
+// React Component
+const FunCom = () => <h1>Functional Component</h1>;
+
+// React Element
+const heading2 = <h1>Hello from JSX</h1>
+```
+
+- Component Composition is the adding a component inside another component.
+
+## Functional Component
+
+## Class Components
 
 - In React, components have a lifecycle that includes several phases: mounting, updating, and unmounting.
 
@@ -6,7 +23,7 @@
 
 - Here is a brief overview of the React component lifecycle methods:
 
-## Mounting
+### Mounting
 
 - Mounting refers to the process of creating a new instance of a component and adding it to the DOM.
 
@@ -18,7 +35,11 @@
 
 - componentDidMount(): This method is called once the component has been added to the DOM. It can be used to perform any setup that requires access to the DOM, such as initializing third-party libraries or fetching data from an API.
 
-## Updating
+- At first constructor is called, then render method is called then componentDidMount is called.
+- In case of multiple childs, child1 constructor-> child 1 render -> child 2 constrctor -> child 2 render -> child 1 componentDidMount -> child2 componentDidMount 
+![React Life Cycle](./images/react-life-cycle.png)
+
+### Updating
 
 - Updating refers to the process of changing the state or props of a component and re-rendering it.
 
@@ -31,7 +52,7 @@
 
 - componentDidUpdate(prevProps, prevState, snapshot): This method is called once the component has been updated and re-rendered. It can be used to perform any necessary post-update operations, such as updating the DOM based on the new state or props.
 
-## Unmounting
+### Unmounting
 
 - Unmounting refers to the process of removing a component from the DOM.
 
