@@ -305,7 +305,5 @@ nav:
       - HOC: React/HOC.md
       - LazyLoading: React/LazyLoading.md
       - Redux: React/Redux.md
-  - Problem Solving:
-      - Sorting Algorithms: ProblemSolving/Sorting.md
-      - Arrays: ProblemSolving/Arrays.md
-      - Arrays (V2): ProblemSolving/Arrays_v2.md
+  - DSA:
+      - Arrays: DSA/Arrays.md
