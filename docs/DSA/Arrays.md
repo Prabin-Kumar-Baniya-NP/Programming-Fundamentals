@@ -138,81 +138,123 @@ Time Complexity: O(n)
     - The solution set must not contain duplicate triplets. This means that even if different indices produce the same set of three numbers, that triplet should only be included once in the output. 
     - For example, if nums = [-1, 0, 1, 2, -1, -4], the triplet [-1, 0, 1] can be formed in multiple ways, but it should only appear once in the final result.
 
-- Brute Force Solution
+### **Brute Force Solution (v1)**  
 ```py
-from typing import List
-
-def three_sum(arr: List):
+def get_unique_triplet(arr: list) -> list[int]:
     n = len(arr)
-    unique_triplet_keys = set() 
+    triplet_keys = set()
     result = []
+
     for i in range(0, n):
-        for j in range(i+1, n):
-            for k in range(j+1, n):
-                if (arr[i] + arr[j] + arr[k]) == 0:
-                    triplets = {arr[i], arr[j], arr[k]}
-                    key = "".join([str(item) for item in triplets])
-                    if key not in unique_triplet_keys:
-                        result.append([arr[i], arr[j], arr[k]])
-                        unique_triplet_keys.add(key)
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                current_sum = arr[i] + arr[j] + arr[k]
+                if current_sum == 0 and (i != j and i != k and j != k):
+                    triplet = [arr[i], arr[j], arr[k]]
+                    key = "".join([str(item) for item in set(triplet)])
+                    if key not in triplet_keys:
+                        result.append(triplet)
+                        triplet_keys.add(key)
+
     return result
 
 arr = [-1, 0, 1, 2, -1, -4]
-print(three_sum(arr))
-
+print(get_unique_triplet(arr))
 ```
 ```
-Time Complexity: 0(n^3)
-Space Complexity: 0(n)
+Time Complexity:  
+    - Outer loop: O(n)  
+    - Middle loop: O(n)  
+    - Inner loop: O(n)  
+    - Total: O(n³)
 
-Note:
-- We sort the array to avoid duplicate triplets. Example: [-1, 3, -2] and [-2, 3, -1] after sorting will be equivalent to [-3, -1, 2]
+Space Complexity: O(k)  
+    - triplet_keys set → O(k)  
+    - result list → O(k)  
+    - k = number of unique triplets found (worst case k ≤ C(n,3) = O(n³))
 ```
 
-- Two Pointer Approach
+---
+
+### **Two Pointer with Set for Duplicate Removal (v2)**  
 ```py
-from typing import List
-
-def unique_triplet(arr: List[int]) -> List[List[int]]:
+def get_unique_triplet_v2(arr: list) -> list[int]:
     n = len(arr)
     arr.sort()
-    triplets = []
+    triplet_keys = set()
+    result = []
 
-    for i in range(n):
-        if i > 0 and arr[i] == arr[i - 1]:
-            continue  # skip duplicates for i
-
-        left, right = i + 1, n - 1
-
-        while left < right:
-            total = arr[i] + arr[left] + arr[right]
-
-            if total == 0:
-                triplets.append([arr[i], arr[left], arr[right]])
-                left += 1
-                right -= 1
-
-                # skip duplicates on the left
-                while left < right and arr[left] == arr[left - 1]:
-                    left += 1
-                # skip duplicates on the right
-                while left < right and arr[right] == arr[right + 1]:
-                    right -= 1
-
-            elif total < 0:
-                left += 1
+    for i in range(0, n):
+        j = i + 1
+        k = n - 1
+        while j < k:
+            current_sum = arr[i] + arr[j] + arr[k]
+            if current_sum == 0 and (i != j and i != k and j != k):
+                triplet = [arr[i], arr[j], arr[k]]
+                key = "".join([str(item) for item in set(triplet)])
+                if key not in triplet_keys:
+                    result.append(triplet)
+                    triplet_keys.add(key)
+                j += 1
+                k -= 1
+            elif current_sum < 0:
+                j += 1
             else:
-                right -= 1
-
-    return triplets
+                k -= 1
+    return result
 ```
 ```
-Time Complexity: 
-    - nums.sort() → O(n log n)
-    - O(n log n + n^2) = O(n²)
+Time Complexity:  
+    - Sorting: O(n log n)  
+    - Outer loop: O(n)  
+    - Two-pointer scan per i: O(n) → O(n²) total  
+    - Overall: O(n²) (sorting is smaller term)
 
-Space Complexity: O(k)
-    - K is the number of triplets returned from the array
+Space Complexity: O(k)  
+    - triplet_keys set → O(k)  
+    - result list → O(k)  
+    - k = number of unique triplets found (worst case k ≤ O(n²))
+```
+
+---
+
+### **Two Pointer with In-Loop Duplicate Skipping (v3)**  
+```py
+def get_unique_triplet_v3(arr: list) -> list[int]:
+    n = len(arr)
+    arr.sort()
+    result = []
+
+    for i in range(0, n):
+        if i > 0 and arr[i] == arr[i - 1]:
+            continue
+        j = i + 1
+        k = n - 1
+        while j < k:
+            current_sum = arr[i] + arr[j] + arr[k]
+            if current_sum == 0 and (i != j and i != k and j != k):
+                result.append([arr[i], arr[j], arr[k]])
+                j += 1
+                k -= 1
+                while j < k and arr[j] == arr[j - 1]:
+                    j += 1
+                while j < k and arr[k] == arr[k + 1]:
+                    k -= 1
+            elif current_sum < 0:
+                j += 1
+            else:
+                k -= 1
+    return result
+```
+```
+Time Complexity:  
+    - Sorting: O(n log n)  
+    - Outer loop: O(n)  
+    - Two-pointer scan per i: O(n) → O(n²) total  
+    - Overall: O(n²)
+
+Space Complexity: O(k)  
+    - result list → O(k) 
 ```
 
 ### Pattern 2: Sliding Window
@@ -222,6 +264,13 @@ Space Complexity: O(k)
 - Problem: Given an array of positive numbers and a positive integer k, find the maximum sum of any contiguous subarray of size k.
 - Example: Input: arr = [1, 4, 2, 10, 2, 3, 1, 0, 20], K = 3 -> Output: 21 (from subarray [1, 0, 20])
 - Approach: Calculate the sum of the first k elements. Then, slide the window: subtract the element leaving the window and add the new element entering the window. Keep track of the maximum sum found.
+
+| Feature              | Contiguous              | Subsequence                    |
+| -------------------- | ----------------------- | ------------------------------ |
+| **Skip allowed?**    | ❌ No                    | ✅ Yes                          |
+| **Order preserved?** | ✅ Yes                   | ✅ Yes                          |
+| **Defined by**       | Start index & end index | Selection of elements in order |
+| **Example**          | `[2, 3, 4]`             | `[2, 4]`                       |
 
 ```py
 from typing import List
@@ -284,3 +333,291 @@ def longest_substring_with_k_distinct(s: str, k: int) -> int:
 Time Complexity: 0(n)
 Space Complexity: 0(k)
 ```
+
+### Hard: Minimum Window Substring
+
+- Problem: Given two strings s and t, find the minimum window substring of s that contains all the characters of t.
+- Example: Input: s = "ADOBECODEBANC", t = "ABC" -> Output: "BANC"
+- Approach: Use a sliding window and a frequency map for characters in t. Expand the window to include all characters from t, then try to shrink it from the left while maintaining the condition.
+
+```py
+def initialize_required_char_freq(string: str):
+    frequency_map = {}
+    for char in string:
+        frequency_map[char] = frequency_map.get(char, 0) + 1
+    return frequency_map
+
+def is_minimum_char_freq_satisfied(current_freq: dict, required_freq: dict):
+    for char, freq in required_freq.items():
+        if current_freq.get(char, 0) < freq:
+            return False
+    return True
+
+def min_window_substring(s: str, t: str) -> str:
+    left_pointer = 0
+    string_length = len(s)
+    current_freq = {}
+    required_freq = initialize_required_char_freq(t)
+    best_window_indices = [0, 0]
+    best_window_length = float("inf")
+
+    for right_pointer in range(string_length):
+        current_char = s[right_pointer]
+        current_freq[current_char] = current_freq.get(current_char, 0) + 1
+
+        while is_minimum_char_freq_satisfied(current_freq, required_freq):
+            current_window_size = right_pointer - left_pointer + 1
+            if current_window_size < best_window_length:
+                best_window_length = current_window_size
+                best_window_indices = [left_pointer, right_pointer + 1]
+
+            # shrink window from the left
+            left_char = s[left_pointer]
+            current_freq[left_char] -= 1
+            if current_freq[left_char] == 0:
+                del current_freq[left_char]
+            left_pointer += 1
+
+    return "" if best_window_length == float("inf") else s[best_window_indices[0]:best_window_indices[1]]
+```
+```
+Time: O(|s|) — Each character visited at most twice (once by right pointer, once by left pointer).
+Space: O(|s| + |t|) in worst case (frequency maps). If fixed alphabet (like ASCII), O(1).
+```
+
+## Pattern 3:  Prefix Sum / Suffix Sum 
+
+###  Easy: Range Sum Query - Immutable
+
+- Problem: Given an integer array nums, handle multiple queries of the form sumRange(i, j), which returns the sum of elements between indices i and j (inclusive). 
+- Example: Input: nums = [-2, 0, 3, -5, 2, -1], sumRange(0, 2) -> Output: 1 ((−2)+0+3=1) 
+- Approach: Create a prefix sum array P where P[i] is the sum of nums[0] through nums[i-1]. Then sumRange(i, j) is simply P[j+1] - P[i].
+
+```
+nums = [-2,  0,  3,  -5,  2,  -1]
+
+P[0] = 0
+       (No elements yet → sum = 0)
+
+P[1] = P[0] + nums[0]
+     = 0 + (-2)
+     = -2
+       (Covers: -2)
+
+P[2] = P[1] + nums[1]
+     = -2 + 0
+     = -2
+       (Covers: -2, 0)
+
+P[3] = P[2] + nums[2]
+     = -2 + 3
+     = 1
+       (Covers: -2, 0, 3)
+
+P[4] = P[3] + nums[3]
+     = 1 + (-5)
+     = -4
+       (Covers: -2, 0, 3, -5)
+
+P[5] = P[4] + nums[4]
+     = -4 + 2
+     = -2
+       (Covers: -2, 0, 3, -5, 2)
+
+P[6] = P[5] + nums[5]
+     = -2 + (-1)
+     = -3
+       (Covers: -2, 0, 3, -5, 2, -1)
+
+```
+```py
+def build_prefix(arr: list[int]) -> list[int]:
+    n = len(arr)
+    prefix_sum = [0] * (n+1)
+    for i in range(n):
+        prefix_sum[i+1] = prefix_sum[i] + arr[i]
+    return prefix_sum
+
+def sumRange(prefix_sum, i, j):
+    return prefix_sum[j + 1] - prefix_sum[i]
+
+
+arr = [-2,  0,  3,  -5,  2,  -1]
+print(sumRange(
+    prefix_sum=build_prefix(arr=arr),
+    i=0,
+    j=4
+))
+```
+
+```
+**Time Complexity**
+- `build_prefix`: O(n)
+- `sumRange`: O(1)
+- Overall (n elements, q queries): O(n + q)
+
+**Space Complexity**
+- Extra space for prefix array: O(n)
+- Query space: O(1)
+```
+
+### Medium: Subarray Sum Equals K
+
+- Problem: Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals k. 
+- Example: Input: nums = [1, 1, 1], k = 2 -> Output: 2 (subarrays [1,1] from index 0 and [1,1] from index 1) 
+- Approach: Use prefix sums and a hash map. Maintain a running sum. For each element, check if current_sum - k exists in the hash map. If it does, add its frequency to the count. Store current_sum and its frequency in the map.
+
+```py
+def build_prefix_sum(arr:list[int]) -> list[int]:
+    n = len(arr)
+    prefix_sum: list[int] = [0] * (n + 1)
+
+    for i in range(n):
+        prefix_sum[i+1] = prefix_sum[i] + arr[i]
+    return prefix_sum
+
+def sumRange(prefix_sum: list[int], i: int, j: int) -> int:
+    return prefix_sum[j + 1] - prefix_sum[i]
+
+def get_subarray_sum_count(arr: list[int], target_sum: int) -> int:
+    n = len(arr)
+    prefix_sum = build_prefix_sum(arr=arr)
+    count = 0
+
+    for i in range(n):
+        for j in range(i+1, n):
+            if sumRange(prefix_sum=prefix_sum, i=i, j=j) == target_sum:
+                count += 1
+    return count
+
+# Example
+arr = [1, 1, 1]
+k = 2
+print(get_subarray_sum_count(arr, k))  # Output: 2
+```
+
+### Hard: Find Pivot Index / Equilibrium Index 
+- Problem: Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index  where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to  the right of the index. 
+- Example: Input: nums = [1, 7, 3, 6, 5, 6] -> Output: 3 (At index 3, left sum 1+7+3=11, right sum 5+6=11) 
+- Approach: Calculate the total sum of the array. Iterate through the array, maintaining a left_sum. For each element, check if left_sum equals total_sum - left_sum - current_element.
+
+```py
+def build_prefix_sum(arr:list[int]) -> list[int]:
+    n = len(arr)
+    prefix_sum: list[int] = [0] * (n + 1)
+
+    for i in range(n):
+        prefix_sum[i+1] = prefix_sum[i] + arr[i]
+    return prefix_sum
+
+def sumRange(prefix_sum: list[int], i: int, j: int) -> int:
+    return prefix_sum[j + 1] - prefix_sum[i]
+
+def get_pivot_element(arr: list[int]) -> int:
+    n = len(arr)
+    prefix_sum = build_prefix_sum(arr=arr)
+
+    for k in range(1, n):
+        left_sum = sumRange(prefix_sum=prefix_sum, i=0, j=k-1)
+        right_sum = sumRange(prefix_sum=prefix_sum, i=k+1, j=n-1)
+
+        if left_sum == right_sum:
+            return arr[k]
+    return -1
+
+arr = [1, 7, 3, 6, 5, 6]
+print(get_pivot_element(arr=arr))
+```
+```
+Time Complexity
+build_prefix → O(n)
+Loop through each index → O(n)
+Each sumRange call is O(1) (because we just do subtraction from the prefix array).
+Total: O(n) + O(n) = O(n)
+
+Space Complexity
+Prefix sum array: size n+1 → O(n)
+A few variables → O(1) extra
+Total: O(n)
+```
+
+## Pattern 5: In-place Operations / Modifications
+
+### Easy: Remove Duplicates from Sorted Array In-place 
+- Problem: Given a sorted array nums, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. 
+- Example: Input: nums = [1,1,2] -> Output: 2, with nums becoming [1,2,_] (underscores denote irrelevant values  beyond the new length). 
+- Approach: Use two pointers: one to iterate through the array, and another to keep track of the position of the next unique element. 
+
+```
+Given array: [1, 1, 2, 2, 3, 3]
+
+Step 1:
+i = 1
+Compare arr[1] = 1 with arr[0] = 1
+They are equal, no change
+unique_pos = 1
+
+Step 2:
+i = 2
+Compare arr[2] = 2 with arr[1] = 1
+They are different
+Place arr[2] (2) at arr[unique_pos] -> arr[1] = 2
+Increment unique_pos to 2
+Array now: [1, 2, 2, 2, 3, 3]
+
+Step 3:
+i = 3
+Compare arr[3] = 2 with arr[2] = 2
+They are equal, no change
+unique_pos = 2
+
+Step 4:
+i = 4
+Compare arr[4] = 3 with arr[3] = 2
+They are different
+Place arr[4] (3) at arr[unique_pos] -> arr[2] = 3
+Increment unique_pos to 3
+Array now: [1, 2, 3, 2, 3, 3]
+
+Step 5:
+i = 5
+Compare arr[5] = 3 with arr[4] = 3
+They are equal, no change
+unique_pos = 3
+
+Final result:
+Length of unique elements = 3
+Unique elements = arr[:3] -> [1, 2, 3]
+```
+
+```py
+arr = [1,1,2,2,2,2,3,4,4,4,5,5,6]
+
+def remove_duplicates(arr: list[int | str]):
+    n = len(arr)
+    unique_pos = 1
+
+    for i in range(1, n):
+        if arr[i] != arr[i-1]:
+            arr[unique_pos] = arr[i]
+            unique_pos += 1
+    return unique_pos
+
+unique_pos = remove_duplicates(arr) # 6
+print(arr) # [1, 2, 3, 4, 5, 6, 3, 4, 4, 4, 5, 5, 6]
+```
+
+### Medium: Rotate Array 
+- Problem: Given an integer array nums, rotate the array to the right by k steps, where k is non-negative. Perform the rotation in-place. 
+- Example: Input: nums = [1,2,3,4,5,6,7], k = 3 -> Output: [5,6,7,1,2,3,4] 
+
+```
+Steps:
+[1,2,3,4,5,6,7], k=3
+
+1. Reverse 0 to k: [1,2,3,4] => [4,3,2,1]
+2. Reverse k to n: [5,6,7] => [7,6,5]
+3. Reverse entire array: [4,3,2,1,7,6,5] => [5,6,7,1,2,3,4]
+```
+
+
