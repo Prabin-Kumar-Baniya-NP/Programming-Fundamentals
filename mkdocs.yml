@@ -307,3 +307,5 @@ nav:
       - Redux: React/Redux.md
   - DSA:
       - Arrays: DSA/Arrays.md
+  - System Design:
+      - Basics: System Design/Basics.md
