@@ -138,7 +138,7 @@ Time Complexity: O(n)
     - The solution set must not contain duplicate triplets. This means that even if different indices produce the same set of three numbers, that triplet should only be included once in the output. 
     - For example, if nums = [-1, 0, 1, 2, -1, -4], the triplet [-1, 0, 1] can be formed in multiple ways, but it should only appear once in the final result.
 
-### **Brute Force Solution (v1)**  
+- **Brute Force Solution (v1)**  
 ```py
 def get_unique_triplet(arr: list) -> list[int]:
     n = len(arr)
@@ -176,7 +176,7 @@ Space Complexity: O(k)
 
 ---
 
-### **Two Pointer with Set for Duplicate Removal (v2)**  
+- **Two Pointer with Set for Duplicate Removal (v2)**  
 ```py
 def get_unique_triplet_v2(arr: list) -> list[int]:
     n = len(arr)
@@ -218,7 +218,7 @@ Space Complexity: O(k)
 
 ---
 
-### **Two Pointer with In-Loop Duplicate Skipping (v3)**  
+- **Two Pointer with In-Loop Duplicate Skipping (v3)**  
 ```py
 def get_unique_triplet_v3(arr: list) -> list[int]:
     n = len(arr)
@@ -257,7 +257,7 @@ Space Complexity: O(k)
     - result list → O(k) 
 ```
 
-### Pattern 2: Sliding Window
+## Pattern 2: Sliding Window
 
 ### Easy: Maximum Sum Subarray of Size K
 
@@ -619,5 +619,8 @@ Steps:
 2. Reverse k to n: [5,6,7] => [7,6,5]
 3. Reverse entire array: [4,3,2,1,7,6,5] => [5,6,7,1,2,3,4]
 ```
-
+### Hard: First Missing Positive 
+- Problem: Given an unsorted integer array nums, return the smallest missing positive integer. You must implement an algorithm that runs in O(N) time and uses O(1) auxiliary space. 
+- Example: Input: nums = [3,4,-1,1] -> Output: 2 
+- Approach: Use the array itself as a hash map. Try to place each positive number x at index x-1. Iterate and find the first index i where nums[i] != i+1.
 

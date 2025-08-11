@@ -309,3 +309,4 @@ nav:
       - Arrays: DSA/Arrays.md
   - System Design:
       - Basics: System Design/Basics.md
+      - Scaling: System Design/Scalability.md
