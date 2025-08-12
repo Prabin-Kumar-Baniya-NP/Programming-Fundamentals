@@ -624,3 +624,117 @@ Steps:
 - Example: Input: nums = [3,4,-1,1] -> Output: 2 
 - Approach: Use the array itself as a hash map. Try to place each positive number x at index x-1. Iterate and find the first index i where nums[i] != i+1.
 
+## Pattern 6: Hashing / Frequency Counting
+
+### Easy: Contains Duplicate 
+- Problem: Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct. 
+- Example: Input: nums = [1,2,3,1] -> Output: true 
+- Approach: Use a hash set to store seen elements. Iterate through the array; if an element is already in the set, return true. Otherwise, add it.
+
+```py
+def is_duplicate_exists(arr: list) -> bool:
+    freq = {}
+    for item in arr:
+        freq[item] = freq.get(item, 0) + 1
+    
+    for item, count in freq.items():
+        if count >= 2:
+            return True
+    return False
+
+nums = [1,2,3,4]
+print(is_duplicate_exists(arr=nums))
+```
+
+### Medium: Group Anagrams 
+- Problem: Given an array of strings strs, group the anagrams together. You can return the answer in any order. 
+- An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once. 
+- Example: Input: strs = ["eat","tea","tan","ate","nat","bat"] -> Output: [["bat"],["nat","tan"],["ate","eat","tea"]] 
+- Approach: For each string, create a canonical representation (e.g., sorted string or character count array). Use this representation as a key in a hash map, and store lists of anagrams as values.
+
+```py
+def group_anagrams(strs: list[str]) -> list[list[str]]:
+    word_keys: dict[str, list] = {}
+    
+    for item in strs:
+        chars: list = sorted(item)
+        key = "".join(chars)
+
+        if key not in word_keys.keys():
+            word_keys[key] = [item]
+        else:
+            word_keys[key].append(item)
+    return list(word_keys.values())
+
+strs = ["eat","tea","tan","ate","nat","bat"]
+print(group_anagrams(strs=strs))
+```
+
+### Hard: Longest Consecutive Elements Sequence
+- Problem: Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. 
+- You must write an algorithm that runs in O(N) time. 
+- Example: Input: nums = [100,4,200,1,3,2] -> Output: 4 (The longest consecutive sequence is [1, 2, 3, 4]) 
+- Approach: Store all numbers in a hash set for O(1) lookups. Iterate through the set. For each number, check if number - 1 exists. If not, it's a potential start of a sequence. Then count the consecutive numbers from there by checking number + 1, number + 2, etc.
+
+```py
+def get_longest_consecutive(arr: list[int]) -> int:
+    num_set = set(arr)
+    longest_consecutive = 0
+    current_sequence_length = 0
+
+    for num in num_set:
+        current_num = num
+        current_sequence_length = 1
+
+        while current_num + 1 in num_set:
+            current_num += 1
+            current_sequence_length += 1
+        
+        longest_consecutive = max(longest_consecutive, current_sequence_length)
+    return longest_consecutive
+
+nums = [100,4,4,200,201,202,203,204,205,1,2]
+```
+```
+Time Complexity: 0(n^2)
+We are re-checking for sequence for every single element in the array.
+```
+
+- Optimized approach - run while loop only when sequence is started
+```
+nums = [1,2,3,4,5,10,11,16,17,18,19,20,21,22,23]
+
+1 - run the while loop
+1-1=0 and 0 in num_Set = No
+
+10 - run the while loop
+(10-1) = 9 and 9 in num set = No
+
+16 - run the while loop
+(16-1) = 15 and 15 in num set = No
+
+3-1=2 and 2 in num set = Yes
+
+
+num-1 not in num_set:
+    while loop
+```
+```py
+def get_longest_consecutive(arr: list[int]) -> int:
+    num_set = set(arr)
+    longest_consecutive = 0
+    current_sequence_length = 0
+
+    for num in num_set:
+        if num-1 not in num_set:
+            current_num = num
+            current_sequence_length = 1
+
+            while current_num + 1 in num_set:
+                current_num += 1
+                current_sequence_length += 1
+        longest_consecutive = max(longest_consecutive, current_sequence_length)
+    return longest_consecutive
+
+nums = [1,2,3,4,5,10,11,16,17,18,19,20,21,22,23]
+```
