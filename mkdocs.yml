@@ -120,6 +120,9 @@ nav:
           - Delete Operation: Database Management System/MongoDB/17.DeleteOperation.md
           - Indexes: Database Management System/MongoDB/18.Indexes.md
           - Aggregation: Database Management System/MongoDB/19.Aggregation.md
+      - Interview Questions:
+          - Window Functions: Database Management System/Interview_Questions/Pattern1.md
+          - Joins: Database Management System/Interview_Questions/Pattern2.md
   - Operating System:
       - Introduction: Operating System/01.Introduction.md
       - Kernel: Operating System/02.Kernel.md
@@ -310,3 +313,5 @@ nav:
   - System Design:
       - Basics: System Design/Basics.md
       - Scaling: System Design/Scalability.md
+      - Architecture:
+        - Monolithic vs Microservice: System Design/Monolithic_vs_Microservice_Architecture.md

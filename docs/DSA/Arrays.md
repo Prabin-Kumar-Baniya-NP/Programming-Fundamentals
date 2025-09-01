@@ -540,7 +540,32 @@ Prefix sum array: size n+1 → O(n)
 A few variables → O(1) extra
 Total: O(n)
 ```
+## Pattern 4: Sorting and Searching
 
+### Medium: Merge Intervals
+
+- Problem: Given an array of intervals where intervals[i] = [start_i, end_i], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+- Example: [[2,3], [6, 9], [7, 10], [1,5]] => [[1, 5], [6, 10]]
+```
+Step1: Sort the invervals based on starting number
+Step2: Check between two interval [a,b] [c,d] if b>=c => [a,d]
+Step3: If overlapping found, the set the last interval 1st index to be max of both interval 1st index number
+```
+```py
+def merge_intervals(num: list[list[int]]) -> list[list[int]]:
+    num.sort(key=lambda x: x[0])
+    result: list[list[int]] = [num[0]]
+
+    for i in range(1, len(num)):
+        last_interval = result[-1]
+        current_interval = num[i]
+
+        if last_interval[1] >= current_interval[0]:
+            last_interval[1] = max(last_interval[1], current_interval[1])
+        else:
+            result.append(current_interval)
+    return result
+```
 ## Pattern 5: In-place Operations / Modifications
 
 ### Easy: Remove Duplicates from Sorted Array In-place 
@@ -624,6 +649,81 @@ Steps:
 - Example: Input: nums = [3,4,-1,1] -> Output: 2 
 - Approach: Use the array itself as a hash map. Try to place each positive number x at index x-1. Iterate and find the first index i where nums[i] != i+1.
 
+- Approach 1: Use extra space: 0(n) to maintain True, False mark in an array of size n
+```
+arr[n+1]
+[False, False, True......]
+ans: 0 + 1
+```
+```py
+def get_smallest_missing_positive_number(arr: list[int]) -> int:
+    n = len(arr)
+    freq_array = [False] * n
+
+    for item in arr:
+        if 1 <= item <= n:      # valid range
+            freq_array[item-1] = True
+
+    for i in range(n):
+        if freq_array[i] == False:
+            return i + 1
+    return n + 1
+```
+- Approach 2: Use the same array to mark element presence
+```
+TC: 0(n)
+SC: 0(1)
+
+[3, 7, -1, 1]
+
+Step 1: Clean invalid numbers by replacing it with n+1
+n = 4
+<=0 or >n
+[3, 5, 5, 1]
+
+Mark 3 presence in the array:
+3-1 = 2 so mark element at index 2 as negative: [3,5,-5,1]
+
+Mark 5 presence in the array:
+No need to do as 5 > n
+
+Mark 5 presence in the arry:
+No need to do as 5 >n
+
+Mark 1 presence in the array:
+1-1 = 0: so make element at 0 as negative: [-3, 5, -5, 1]
+
+Now, find first element which is positive
+i=1, we have +ve num so ans: i+1 = 2
+```
+```py
+def clean_list(num: list[int], n: int) -> list[int]:
+    for i in range(0, n):
+        if num[i] <= 0 or num[i] > n:
+            num[i] = n+1
+    return num
+
+def mark_element_presence(num: list[int], n: int) -> list[int]:
+    for i in range(n):
+        if 1 <= abs(num[i]) <= n:
+            target_index = abs(num[i]) - 1
+            if num[target_index] > 0:
+                num[target_index] *= -1
+    return num
+
+def get_smallest_missing_positive(num: list[int]):
+    n = len(num)
+
+    # Clean the list
+    num = clean_list(num=num, n=n)
+
+    num = mark_element_presence(num=num, n=n)
+
+    for i in range(0, n):
+        if num[i] > 0:
+            return i+1
+    return n+1
+```
 ## Pattern 6: Hashing / Frequency Counting
 
 ### Easy: Contains Duplicate 
