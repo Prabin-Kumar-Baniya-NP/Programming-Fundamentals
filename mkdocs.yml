@@ -123,6 +123,10 @@ nav:
       - Interview Questions:
           - Window Functions: Database Management System/Interview_Questions/Pattern1.md
           - Joins: Database Management System/Interview_Questions/Pattern2.md
+          - CTE: Database Management System/Interview_Questions/Pattern3.md
+          - Optimizations: Database Management System/Interview_Questions/Pattern4.md
+          - Data Modeling: Database Management System/Interview_Questions/Pattern5.md
+          - Data Transformation: Database Management System/Interview_Questions/Pattern6.md
   - Operating System:
       - Introduction: Operating System/01.Introduction.md
       - Kernel: Operating System/02.Kernel.md
