@@ -552,19 +552,21 @@ Step2: Check between two interval [a,b] [c,d] if b>=c => [a,d]
 Step3: If overlapping found, the set the last interval 1st index to be max of both interval 1st index number
 ```
 ```py
-def merge_intervals(num: list[list[int]]) -> list[list[int]]:
+def merge_interval(num: list[list[int]]):
+    if not num:
+        return []
+    
     num.sort(key=lambda x: x[0])
-    result: list[list[int]] = [num[0]]
+    merged_interval = [num[0]]
 
-    for i in range(1, len(num)):
-        last_interval = result[-1]
-        current_interval = num[i]
+    for current_start, current_end in num[1:]:
+        last_start, last_end = merged_interval[-1]
 
-        if last_interval[1] >= current_interval[0]:
-            last_interval[1] = max(last_interval[1], current_interval[1])
+        if last_end >= current_start:
+            merged_interval[-1][1] = max(last_end, current_end)
         else:
-            result.append(current_interval)
-    return result
+            merged_interval.append([current_start, current_end])
+    return merged_interval
 ```
 ## Pattern 5: In-place Operations / Modifications
 
@@ -837,4 +839,146 @@ def get_longest_consecutive(arr: list[int]) -> int:
     return longest_consecutive
 
 nums = [1,2,3,4,5,10,11,16,17,18,19,20,21,22,23]
+```
+
+## Pattern 7: Kadane's Algorithm & Subarray Problems
+
+### Easy: Maximum Subarray Sum (Kadane's Algorithm) 
+
+- Problem: Given an integer array nums, find the subarray with the largest sum, and return its sum. 
+- A subarray is a contiguous non-empty sequence of elements within an array. 
+- Example: Input: nums = [-2,1,-3,4,-1,2,1,-5,4] -> Output: 6 (subarray [4,-1,2,1]) 
+
+```
+- Find current sum and if current sum becomes less than 0, set the current sum to 0
+```
+```py
+def maximum_sum_subarray(num: list[int]):
+    if not num:
+        return -1
+    
+    max_sum = num[0]
+    current_sum = 0
+
+    for item in num:
+        current_sum += item
+
+        max_sum = max(max_sum, current_sum)
+
+        if current_sum <= 0:
+            current_sum = 0
+        
+    return max_sum
+```
+
+### Medium: Maximum Product Subarray 
+
+- Problem: Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product. 
+- Example: Input: nums = [2,3,-2,4] -> Output: 6 (subarray [2,3])
+
+```
+# Maximum Product Subarray Example
+
+**Array:** [2, 3, -2, 4]  
+
+We track three values at each step:  
+- `max_here` → max product ending at current index  
+- `min_here` → min product ending at current index (to handle negatives)  
+- `answer` → overall max product so far  
+
+| Index | Value | max_here | min_here | answer |
+|-------|-------|----------|----------|--------|
+| 0     | 2     | 2        | 2        | 2      |
+| 1     | 3     | 6        | 3        | 6      |
+| 2     | -2    | -2       | -12      | 6      |
+| 3     | 4     | 4        | -48      | 6      |
+
+**Explanation:**  
+- At index 2, -2 flips the sign: max becomes -2, min becomes -12.  
+- At each step, `answer` keeps the largest `max_here` seen so far.  
+
+**Final Answer:** 6 (subarray [2,3])
+```
+```py
+def get_maximum_product_subarray(num: list[int]):
+    if not num:
+        return -1
+    
+    max_product = num[0]
+    min_product = num[0]
+    answer = num[0]
+
+    for item in num[1:]:
+        prev_max = max_product
+        prev_min = min_product
+
+        max_product = max(item, item * prev_max, item * prev_min)
+        min_product = min(item, item * prev_max, item * prev_min)
+
+        answer = max(answer, max_product)
+    return answer
+```
+### Hard: Maximum Sum Circular Subarray 
+
+- Problem: Given a circular integer array nums (the next element of nums[n-1] is nums[0]), return the maximum possible sum of a non-empty subarray. 
+- Example: Input: nums = [1,-2,3,-2] -> Output: 3 (subarray [3])
+
+```
+# Maximum Sum Circular Subarray – Quick Revision
+
+**Problem:** Find the maximum sum of a non-empty subarray in a circular array `nums` (wraps around).
+
+**Example:**  
+`nums = [5, -3, 5]` → max circular sum = 10 (subarray `[5, 5]`), normal max sum = 7 (subarray `[5, -3, 5]`).
+
+**Approach:**  
+1. **Normal max subarray (Kadane’s):**  
+   - `curr_max = max(num, curr_max + num)` → max sum ending at current element  
+   - `max_sum = max(max_sum, curr_max)` → overall max sum  
+
+2. **Circular max subarray:**  
+   - `curr_min = min(num, curr_min + num)` → min sum ending at current element  
+   - `min_sum = min(min_sum, curr_min)` → overall min sum  
+   - `total_sum = sum(nums)`  
+   - Circular max sum = `total_sum - min_sum`  
+
+3. **Edge case:** If all numbers are negative, circular sum is invalid → return normal max sum.
+
+**Example Walkthrough (`nums = [5, -3, 5]`):**  
+- `total_sum = 7`, `max_sum = 7`, `min_sum = -3` → circular sum = 7 - (-3) = 10 ✅  
+- Wrap-around subarray contributing = `[5, 5]` (skips -3).  
+
+**Key Idea:**  
+- Normal subarray → Kadane’s  
+- Circular subarray → total sum minus minimum subarray sum  
+- All negative numbers → pick max element  
+
+**Time Complexity:** O(n), **Space Complexity:** O(1)
+```
+
+```py
+def get_maximum_sum_circular_subarray(num: list[int]):
+    if not num:
+        return -1
+    
+    max_sum = curr_max = num[0]
+    min_sum = curr_min = num[0]
+    total = num[0]
+
+    for item in num[1:]:
+        # Max subarray
+        curr_max = max(item, curr_max + item)
+        max_sum = max(max_sum, curr_max)
+        
+        # Min subarray
+        curr_min = min(item, curr_min + item)
+        min_sum = min(min_sum, curr_min)
+
+        total += item
+    
+    # If all numbers are negative
+    if max_sum < 0:
+        return max_sum
+
+    return max(max_sum, total - min_sum)
 ```
