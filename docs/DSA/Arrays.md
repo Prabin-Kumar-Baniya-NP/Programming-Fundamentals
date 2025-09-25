@@ -982,3 +982,279 @@ def get_maximum_sum_circular_subarray(num: list[int]):
 
     return max(max_sum, total - min_sum)
 ```
+
+## Pattern 8: Cyclic Sort
+
+### Easy: Find the Missing Number 
+
+- Problem: Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array. 
+- Example: Input: nums = [3,0,1] -> Output: 2 
+- Approach: Use Cyclic Sort to place nums[i] at index nums[i]. Then iterate and find the first index i where nums[i] != i.Alternatively, sum up numbers from 0 to n and subtract the sum of elements in the array.
+
+```
+[3, 0, 1] => 2
+
+3:
+    correct index for 3 -> skip since 3 > n-1
+
+0:
+    correct index for 0 -> at index 0
+    swap 3, 0 -> [0, 3, 1]
+
+1:
+    correct index for 1 -> at index 1
+    from [0, 3, 1] -> swap 3, 1 -> [0, 1, 3]
+
+iterate over [0, 1, 3]
+check number at i = i ?
+    2 == 3 -> fails -> missing number
+```
+```py
+def get_missing_number(num: list[int]):
+    n = len(num)
+    i = 0
+
+    while i < n:
+        correct_index = num[i]
+
+        if num[i] < n and num[correct_index] != num[i]:
+            num[i], num[correct_index] = num[correct_index], num[i]
+        else:
+            i += 1
+    
+    for index, item in enumerate(num):
+        if index != item:
+            return index
+    return n
+```
+Note:
+- For else part (i += 1): We only move to the next index if the current number is already at the correct position or it is out of range.
+
+### Medium: Find All Duplicates in an Array 
+
+- Problem: Given an integer array nums of length n where all the integers of nums are in the range [1, n] and each integer appears once or twice, return an array of all the integers that appear twice. 
+- You must write an algorithm that runs in O(N) time and uses only constant extra space. 
+- Example: Input: nums = [4,3,2,7,8,2,3,1] -> Output: [2,3] 
+- Approach: Use Cyclic Sort. Iterate through the array. If nums[i] is not at its correct position (nums[i] != 
+nums[nums[i]-1]), swap it. If it's a duplicate (i.e., nums[i] == nums[nums[i]-1]), move on. After placing elements, 
+iterate again to find numbers not at their correct positions. A clever alternative is to mark visited numbers by 
+negating elements at indices.
+```
+[4,3,2,7,8,2,3,1]
+
+4:
+    mark 4 as present: [4,3,2,-7,8,2,3,1]
+3:
+    mark 3 as present: [4,3,-2,-7,8,2,3,1]
+2:
+    mark 2 as present: [4,-3,-2,-7,8,2,3,1]
+7:
+    mark 7 as present: [4,-3,-2,-7,8,2,-3,1]
+8:
+    mark 8 as present: [4,-3,-2,-7,8,2,-3,-1]
+2:
+    mark 2 as present: [4,-3,-2,-7,8,2,-3,-1]: since -3 is already negative -> so add in duplicate
+```
+```py
+def get_duplicate_items(num: list[int]) -> list[int]:
+    n = len(num)
+    duplicates = []
+    i = 0
+
+    while i < n:
+        number_index = abs(num[i]) - 1
+
+        if num[number_index] < 0:
+            duplicates.append(abs(num[i]))
+        else:
+            num[number_index] *= -1
+        i += 1
+    return duplicates
+```
+
+### Hard: Find the Corrupt Pair (Set Mismatch) 
+
+- Problem: You have a set of integers s, which originally contained all the numbers from 1 to n. 
+- Unfortunately, due to an error, one of the numbers in s got duplicated to another number in the set, which results in repetition of 
+one number and loss of another number.
+- Given an integer array nums representing the data status of this set after the error, return the sum of the duplicate number and the missing number. 
+- Example: Input: nums = [1,2,2,4] -> Output: [2,3] (2 is duplicate, 3 is missing)
+- Approach: Use Cyclic Sort to place each number x at index x-1. After the rearrangement, iterate through the array. The index i where nums[i] is not equal to i+1 indicates that nums[i] is the duplicate and i+1 is the missing 
+number.
+```
+[1,2,2,4]
+
+1 -> mark 1 as present-> [-1,2,2,4]
+2 -> mark 2 as present -> [-1, -2, 2, 4]
+2 -> mark 2 as present -> [-1, -2, 2, 4] -> number is already negative, so add it in pair -> [2]
+4 -> mark 4 as present -> [-1, -2, 2, -4]
+
+Iterate over final array and find positive number: -> 2 at index 2 -> element is 2+1 = 3 => [2,3]
+```
+```py
+def get_corrupt_pair(num: list[int]):
+    n = len(num)
+    corrupt_pair = []
+    
+    for i in range(n):
+        correct_index = abs(num[i]) - 1
+        if num[correct_index] < 0:
+            corrupt_pair.append(abs(num[i]))
+        else:
+            num[correct_index] *= -1
+    
+    for i in range(n):
+        if num[i] > 0:
+            corrupt_pair.append(i + 1)
+    
+    return corrupt_pair
+```
+
+## Pattern 9: Interval Problems
+
+### Easy: Check for Overlapping Intervals 
+
+- Problem: Given a collection of intervals, determine if any two intervals overlap. 
+- Example: Input: intervals = [[1,3],[4,6],[7,9]] -> Output: false; Input: intervals = [[1,3],[2,4]] -> Output: true 
+- Approach: Sort intervals by their start times. Then, iterate and check if current_end is greater than or equal to 
+next_start.
+
+```py
+def is_interval_overlaps(intervals: list[list[int]]) -> bool:
+    if not intervals:
+        return False
+    
+    # Sort intervals by start time
+    intervals.sort(key=lambda x: x[0])
+    
+    prev_end = intervals[0][1]  # end of first interval
+
+    for current_start, current_end in intervals[1:]:
+        if prev_end >= current_start:  # overlap found
+            return True
+        prev_end = current_end  # update prev_end
+    
+    return False
+```
+### Medium: Insert Interval 
+
+- Problem: You are given an array of non-overlapping intervals intervals, sorted by their start times, and a 
+newInterval. Insert newInterval into intervals such that intervals is still sorted in ascending order by start time 
+and remains non-overlapping. 
+
+- Example: Input: intervals = [[1,3],[6,9]], newInterval = [2,5] -> Output: [[1,5],[6,9]] 
+- Approach: Iterate through existing intervals. Add intervals that come before newInterval or after newInterval 
+without overlap. For overlapping intervals, merge them with newInterval. 
+
+```
+### Example Walkthrough
+
+**Input**  
+intervals = [[1,3],[6,9]]  
+newInterval = [2,5]  
+
+---
+
+**Step 1: Add intervals that end before newInterval starts**  
+- newInterval starts at 2.  
+- [1,3] ends at 3 → not < 2 → stop here.  
+- Result = []
+
+---
+
+**Step 2: Merge overlapping intervals**  
+- Check [1,3] with [2,5]:  
+  - Overlaps since 3 ≥ 2  
+  - Merge → [min(1,2), max(3,5)] = [1,5]  
+  - newInterval becomes [1,5]  
+- Next interval [6,9]:  
+  - Starts at 6, which is > newInterval’s end (5) → stop merging  
+- Add merged interval → Result = [[1,5]]
+
+---
+
+**Step 3: Add intervals that start after newInterval ends**  
+- Add [6,9]  
+- Result = [[1,5],[6,9]]
+
+---
+
+**Output**  
+[[1,5],[6,9]]
+
+```
+
+```py
+def insert_interval(intervals: list[list[int]], new_interval: list[int]) -> list[list[int]]:
+    result = []
+    i = 0
+    n = len(intervals)
+
+    # Step 1: add all intervals before new_interval
+    while i < n and intervals[i][1] < new_interval[0]:
+        result.append(intervals[i])
+        i += 1
+
+    # Step 2: merge overlaps
+    while i < n and intervals[i][0] <= new_interval[1]:
+        new_interval[0] = min(new_interval[0], intervals[i][0])
+        new_interval[1] = max(new_interval[1], intervals[i][1])
+        i += 1
+    result.append(new_interval)
+
+    # Step 3: add all intervals after new_interval
+    while i < n:
+        result.append(intervals[i])
+        i += 1
+
+    return result
+```
+
+### Hard: Meeting Rooms II
+
+- Problem: Given an array of meeting time intervals intervals where intervals[i] = [start_i, end_i], find the minimum number of conference rooms required. 
+- Example: Input: intervals = [[0, 30],[5, 10],[15, 20]] -> Output: 2 (One room for [0,30], another for [5,10] and [15,20])
+
+```
+Approach:
+- The maximum number of meetings that takes place concurrenty is the number of rooms that are required.
+- Have two pointers for start and end time.
+
+[[0, 30], [5, 10], [15, 20]]
+
+Start Times: [0, 5, 15]
+End Times: [10, 20, 30]
+
+0 < 10 → add 1 room (room_required = 1)
+5 < 10 → add 1 room (room_required = 2)
+15 >= 10 → earliest meeting ended, move end pointer to 20, decrease room_required by 1 (room_required = 1)
+15 < 20 → add 1 room (room_required = 2)
+```
+
+```py
+
+def get_number_of_meeting_room(intervals: list[list[int]]) -> int:
+    if not intervals:
+        return 0
+
+    # Separate and sort start and end times
+    start_times = sorted([i[0] for i in intervals])
+    end_times = sorted([i[1] for i in intervals])
+
+    s, e = 0, 0  # pointers for start and end
+    room_required, max_rooms = 0, 0
+
+    while s < len(intervals):
+        if start_times[s] < end_times[e]:
+            # need a new room
+            room_required += 1
+            s += 1
+        else:
+            # one meeting ended, reuse room
+            room_required -= 1
+            e += 1
+
+        max_rooms = max(max_rooms, room_required)
+
+    return max_rooms
+```
